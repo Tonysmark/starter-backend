@@ -1,4 +1,4 @@
-import { User } from '@libs/db/user/user.entity';
+import { User } from '@libs/db/entitys/user/user.entity';
 
 import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 
@@ -20,8 +20,6 @@ import { UserBaseDto } from './dto/user-dto';
  */
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-    // 用户并不是真的被删除了，只不过再 is_deleted 字段设置为 true
-
     async createUser(user: UserBaseDto): Promise<User> {
         const userEntity = new User(user.username, user.email, await Crypt.encrypt(user.password));
         try {

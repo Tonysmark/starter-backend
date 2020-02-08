@@ -1,10 +1,15 @@
 import { DbModule } from '@libs/db';
-import { UserModule } from '@libs/user';
+import { SharedModule } from '@libs/shared';
 
 import { Module } from '@nestjs/common';
 
+import { RoleModule } from './role/role.module';
+
+/**
+ *  只有管理员可以操作用户权限
+ */
 @Module({
     providers: [],
-    imports: [DbModule, UserModule],
+    imports: [DbModule, SharedModule, RoleModule],
 })
 export class AppModule {}

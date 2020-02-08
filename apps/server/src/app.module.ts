@@ -1,10 +1,9 @@
 import { DbModule } from '@libs/db';
-import { UserModule } from '@libs/user';
+import { SharedModule } from '@libs/shared';
 
 import { Module } from '@nestjs/common';
-
 @Module({
-    imports: [DbModule, UserModule],
+    imports: [DbModule, SharedModule],
     controllers: [],
     providers: [],
 })

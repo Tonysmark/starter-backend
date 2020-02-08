@@ -17,7 +17,7 @@ async function bootstrap() {
     // start port
     await app.listen(3001);
     // Loggers
-    Logger.log('admin app running at http://localhost:3001', 'Bootstrap');
+    Logger.log('base server app running at http://localhost:3001', 'Bootstrap');
     Logger.log('api documentation at http://localhost:3001/api-doc', 'Swagger');
 }
 bootstrap();

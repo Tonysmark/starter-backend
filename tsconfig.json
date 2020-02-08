@@ -22,12 +22,6 @@
       ],
       "@libs/shared/*": [
         "libs/shared/src/*"
-      ],
-      "@libs/user": [
-        "libs/user/src"
-      ],
-      "@libs/user/*": [
-        "libs/user/src/*"
       ]
     }
   },
