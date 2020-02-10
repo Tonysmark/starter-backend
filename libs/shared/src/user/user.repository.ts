@@ -2,7 +2,7 @@ import { User } from '@libs/db/entitys/user/user.entity';
 
 import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 
-import Crypt from 'libs/util/crypt';
+import { encrypt } from 'libs/util/crypt';
 
 import { EntityRepository, Repository } from 'typeorm';
 
@@ -21,7 +21,7 @@ import { UserBaseDto } from './dto/user-dto';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
     async createUser(user: UserBaseDto): Promise<User> {
-        const userEntity = new User(user.username, user.email, await Crypt.encrypt(user.password));
+        const userEntity = new User(user.username, user.email, await encrypt(user.password));
         try {
             await userEntity.save();
             return userEntity;
@@ -31,42 +31,28 @@ export class UserRepository extends Repository<User> {
     }
 
     async updateUserById(user: UserCredential, id: string) {
-        const userEntity = await this.getUser(id);
+        const userEntity = await this.getUserById(id);
         if (user['password']) {
-            user.password = await Crypt.encrypt(user.password);
+            user.password = await encrypt(user.password);
         }
         user.update_time = new Date();
         this.update(userEntity, user);
     }
 
-    async updateUserByEmail(user: UserCredential) {
-        const query = this.createQueryBuilder('user');
-        const { email } = user; // 因为 email 唯一所以只用 getOne 就行
-        const userEntity = await query.where('user.email=:email', { email }).getOne();
-        if (userEntity) {
-            if (user['password']) {
-                user.password = await Crypt.encrypt(user.password);
-            }
-            user.update_time = new Date();
-            this.update(userEntity, user);
-        } else {
-            throw new NotFoundException(`使用 email: ${email} 的用户不存在`);
-        }
-    }
-
     async deleteUser(id: string): Promise<void> {
         // 本质也是调用 updateUser 只不过把 user 中的 is_deleted = true
-        const userEntity = await this.getUser(id);
+        const userEntity = await this.getUserById(id);
         this.update(userEntity, { is_deleted: true });
         return;
     }
 
-    async getUser(id: string): Promise<User> {
+    async getUserById(id: string): Promise<User> {
+        // 管理员在管理面板看到的用户数据肯定带有id
         const user = await this.findOne(id);
         if (user) {
             return user;
         } else {
-            throw new NotFoundException(`当前用户 id: ${id} 未找到`);
+            throw new NotFoundException(`当前用户 ${id} 未找到`);
         }
     }
 
@@ -74,5 +60,20 @@ export class UserRepository extends Repository<User> {
         const number = await this.count();
         Logger.log(number, 'UserRepository');
         return this.find();
+    }
+
+    async fineUser(user: UserBaseDto) {
+        // 提供给非 admin controller 下
+        const query = this.createQueryBuilder('user');
+        const { email, username } = user; // 因为 email 唯一所以只用 getOne 就行
+        const userEntity = await query
+            .where('user.email=:email', { email })
+            .orWhere('user.username=:username', { username })
+            .getOne();
+        if (userEntity) {
+            return userEntity;
+        } else {
+            throw new NotFoundException('用户不存在');
+        }
     }
 }

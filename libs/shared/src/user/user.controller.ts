@@ -31,16 +31,10 @@ export class UserController {
         return this.userService.createUser(user);
     }
 
-    @ApiOperation({ summary: '已知id更新用户' })
+    @ApiOperation({ summary: '更新用户' })
     @Put(':id')
     updateUserById(@Body() user: UserCredential, @Param('id') id: string) {
         return this.userService.updateUserById(user, id);
-    }
-
-    @ApiOperation({ summary: '未知id更新用户' })
-    @Post('update-by-email')
-    updateUserByEmail(@Body() user: UserCredential) {
-        return this.userService.updateUserByEmail(user);
     }
 
     @ApiOperation({ summary: '删除用户' })
@@ -52,7 +46,7 @@ export class UserController {
     @ApiOperation({ summary: '获取某一个用户' })
     @Get(':id')
     getUser(@Param('id') id: string) {
-        return this.userService.getUser(id);
+        return this.userService.getUserById(id);
     }
 
     @ApiOperation({ summary: '获取所有用户' })

@@ -14,23 +14,22 @@ export class UserService {
         return await this.userRepository.createUser(user);
     }
 
-    updateUserById(user: UserCredential, id: string) {
+    async updateUserById(user: UserCredential, id: string) {
         return this.userRepository.updateUserById(user, id);
     }
 
-    updateUserByEmail(user: UserCredential) {
-        return this.userRepository.updateUserByEmail(user);
-    }
-
-    deleteUser(id: string) {
+    async deleteUser(id: string) {
         return this.userRepository.deleteUser(id);
     }
 
-    getUser(id: string) {
-        return this.userRepository.getUser(id);
+    async getUserById(id: string) {
+        return this.userRepository.getUserById(id);
+    }
+    async findUser(user: UserBaseDto) {
+        return this.userRepository.fineUser(user);
     }
 
-    getUsers() {
+    async getUsers() {
         return this.userRepository.getUsers();
     }
 }
