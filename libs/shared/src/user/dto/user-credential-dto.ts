@@ -1,18 +1,18 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiProperty } from '@nestjs/swagger';
 
-@ApiTags('基本用户信息')
+@ApiTags('完整的用户信息')
 export class UserCredential {
-    username: string;
+    @ApiProperty() username: string;
 
-    icon: string;
+    @ApiProperty() icon: string;
 
-    password: string;
+    @ApiProperty() password: string;
 
-    email: string;
+    @ApiProperty() email: string;
 
-    create_time: Date;
+    @ApiProperty() create_time: Date;
 
-    update_time: Date;
+    @ApiProperty() update_time: Date;
 
-    is_deleted: boolean;
+    @ApiProperty() is_deleted: boolean;
 }

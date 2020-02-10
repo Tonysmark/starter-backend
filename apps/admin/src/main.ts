@@ -11,6 +11,7 @@ async function bootstrap() {
         .setTitle('管理员接口文档')
         .setDescription('为 admin 前端提供接口服务')
         .setVersion('1.0')
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api-doc', app, document);

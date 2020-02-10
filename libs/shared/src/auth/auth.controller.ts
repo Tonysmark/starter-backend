@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiHeader } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 import { UserBaseDto } from '../user/dto/user-dto';
@@ -15,6 +15,7 @@ export class AuthController {
         return this.authService.login(credential);
     }
 
+    @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Get('profile')
     async profile(@Req() req) {

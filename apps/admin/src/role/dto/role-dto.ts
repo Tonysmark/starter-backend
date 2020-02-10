@@ -1,10 +1,12 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 import PermissionDto from './permission-dto';
 
 export default class RoleDto {
     // 创建一个角色
-    name: string;
+    @ApiProperty() name: string;
 
-    description: string;
+    @ApiProperty() description: string;
 
-    permission: PermissionDto[];
+    @ApiProperty() permission: PermissionDto[];
 }

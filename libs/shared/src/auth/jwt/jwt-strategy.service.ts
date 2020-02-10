@@ -7,6 +7,7 @@ import { secret } from './constants';
 
 @Injectable()
 export class JwtStrategyService extends PassportStrategy(Strategy) {
+    // 函数 PassportStrategy 的实现
     constructor() {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
