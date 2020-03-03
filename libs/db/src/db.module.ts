@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
 
 import { DbService } from './db.service';
 
@@ -22,6 +23,10 @@ const defaultOption: TypeOrmModuleOptions = {
             ...defaultOption,
             entities: [User, Role, UserLoginLog],
             synchronize: true,
+        }),
+        GraphQLModule.forRoot({
+            debug: true,
+            playground: true,
         }),
     ],
     providers: [DbService],

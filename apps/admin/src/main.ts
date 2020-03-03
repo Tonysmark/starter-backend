@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-
+    app.enableCors();
     const options = new DocumentBuilder()
         .setTitle('管理员接口文档')
         .setDescription('为 admin 前端提供接口服务')

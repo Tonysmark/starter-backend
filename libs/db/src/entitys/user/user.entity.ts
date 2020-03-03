@@ -10,7 +10,7 @@ export class User extends BaseEntity {
     @Column({ type: 'varchar', length: 64 })
     username: string;
 
-    @Column({ type: 'varchar', length: 500 })
+    @Column({ type: 'varchar', length: 500, default: 'default icon url' })
     icon: string;
 
     @Exclude()
@@ -27,17 +27,12 @@ export class User extends BaseEntity {
     update_time: Date;
 
     @Exclude()
-    @Column({ type: 'tinyint' })
+    @Column({ type: 'tinyint', default: false })
     is_deleted: boolean;
 
-    constructor(username, email, password) {
+    constructor() {
         super();
-        this.username = username;
-        this.email = email;
-        this.password = password;
         this.create_time = new Date();
         this.update_time = new Date();
-        this.is_deleted = false; // boolean 自动转换为 tinyint
-        this.icon = 'default icon url';
     }
 }
