@@ -4,9 +4,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import { DbService } from './db.service';
 
-import Role from './entitys/role/role.entity';
-import { UserLoginLog } from './entitys/user/user-logger.entity';
-import { User } from './entitys/user/user.entity';
+import Role from './entities/role/role.entity';
+import { UserLoginLog } from './entities/user/user-logger.entity';
+import { User } from './entities/user/user.entity';
 const defaultOption: TypeOrmModuleOptions = {
     type: 'mysql',
     host: 'localhost',

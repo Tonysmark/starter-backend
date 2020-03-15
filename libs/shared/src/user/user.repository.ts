@@ -1,4 +1,4 @@
-import { User } from '@libs/db/entitys/user/user.entity';
+import { User } from '@libs/db/entities/user/user.entity';
 
 import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 
